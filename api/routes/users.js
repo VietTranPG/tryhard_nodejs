@@ -7,16 +7,18 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 router.post('/signup', function (req, res, next) {
-  
   var user = req.body;
   var email = user.email;
   var password = user.password;
   if (email && password) {
-    console.log(req.body)
     user_model.CreateUser(user)
       .then(function (result) {
-        console.result;
-      }).error(function(error){
+        res.json({
+          Data: [],
+          Message: "Signup Successfully!",
+          Status: "success"
+        });
+      }).error(function (error) {
         console.log(error);
       });
   } else {
@@ -27,4 +29,29 @@ router.post('/signup', function (req, res, next) {
     });
   }
 });
+router.post('/signin', function (req, res, next) {
+  var user = req.body;
+  var email = user.email;
+  var password = user.password;
+  if (email && password) {
+    user_model.GetUserByEmail(user)
+      .then(function (result) {
+        console.log(result)
+        res.json({
+          Data: [],
+          Message: "Login Successfully!",
+          Status: "success"
+        });
+      }).error(function (error) {
+        console.log(error);
+      });
+  } else {
+    res.json({
+      Data: [],
+      Message: "Email and Password is required!",
+      Status: "error"
+    });
+  }
+});
+
 module.exports = router;
