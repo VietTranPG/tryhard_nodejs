@@ -1,7 +1,6 @@
 var Promise = require("bluebird");
 var connection = require("../common/database");
 function CreateUser(user) {
-
     return new Promise(function (resolve, reject) {
         connection.acquire(function (err, con) {
             con.query('INSERT INTO user SET ?', user, function (error, results, fields) {
@@ -16,9 +15,11 @@ function CreateUser(user) {
     });
 };
 function GetUserByEmail(user) {
+    var query = 'select * from user where email = ' + user.email + ' and password = ' + user.password;
+    console.log(query);
     return new Promise(function (resolve, reject) {
         connection.acquire(function (err, con) {
-            con.query('select * from user where email = ' + user.email + 'and password = ' + user.password, function (error, results, fields) {
+            let query = con.query(`select * from user where email = ?  and password = ?`, [user.email, user.password], function (error, results, fields) {
                 con.release();
                 if (error) {
                     reject(error);

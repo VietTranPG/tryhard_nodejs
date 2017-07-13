@@ -10,6 +10,7 @@ router.post('/signup', function (req, res, next) {
   var user = req.body;
   var email = user.email;
   var password = user.password;
+  console.log(user)
   if (email && password) {
     user_model.CreateUser(user)
       .then(function (result) {
@@ -36,12 +37,21 @@ router.post('/signin', function (req, res, next) {
   if (email && password) {
     user_model.GetUserByEmail(user)
       .then(function (result) {
-        console.log(result)
-        res.json({
-          Data: [],
-          Message: "Login Successfully!",
-          Status: "success"
-        });
+        if (result.length > 0) {
+          var data = result.pop();
+          delete data.password;
+          res.json({
+            Data: data,
+            Message: "Login Successfully!",
+            Status: "success"
+          });
+        } else {
+          res.json({
+            Data: [],
+            Message: "Email or Password wrong!",
+            Status: "error"
+          });
+        }
       }).error(function (error) {
         console.log(error);
       });
