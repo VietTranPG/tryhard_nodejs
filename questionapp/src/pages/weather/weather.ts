@@ -1,31 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { UtilityService } from '../../core/services/utility.service';
 import { DataService } from '../../core/services/data.service';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  LatLng,
-  CameraPosition,
-  MarkerOptions,
-  Marker
-} from '@ionic-native/google-maps';
 /**
  * Generated class for the Weather page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-
+declare var google: any;
 @Component({
   selector: 'page-weather',
   templateUrl: 'weather.html',
   providers: [Geolocation]
 })
 export class Weather {
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation, private utility: UtilityService, private _http: DataService, private googleMaps: GoogleMaps) {
+  map: any;
+  marker:any;
+  title: string = "Weather page"
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation,
+    private utility: UtilityService, private _http: DataService, private zone: NgZone) {
 
   }
 
@@ -36,6 +31,7 @@ export class Weather {
   getcurrentlocation() {
     this.geolocation.getCurrentPosition().then((resp) => {
       this.getWeather(resp.coords.latitude, resp.coords.longitude)
+      this.loadMap(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -47,44 +43,38 @@ export class Weather {
     })
   };
   ngAfterViewInit() {
-    this.loadMap();
+
   }
-  loadMap() {
-    // make sure to create following structure in your view.html file
-    // and add a height (for example 100%) to it, else the map won't be visible
-    // <ion-content>
-    //  <div #map id="map" style="height:100%;"></div>
-    // </ion-content>
+  loadMap(lat, lng) {
+    let autocompleteInput = document.getElementById('autocomplete').getElementsByTagName('input')[0];
+    this.map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: lat, lng: lng },
+      zoom: 12
+    });
+    let autocomplete = new google.maps.places.Autocomplete(autocompleteInput);
 
-    // create a new map by passing HTMLElement
-    let element: HTMLElement = document.getElementById('map');
-    let map: GoogleMap = this.googleMaps.create(element);
-
-    // listen to MAP_READY event
-    // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    map.one(GoogleMapsEvent.MAP_READY).then(
-      () => {
-        console.log('Map is ready!');
-        // Now you can add elements to the map like the marker
-      }
-    ).catch((err) => { console.log(err) });
-    let ionic: LatLng = new LatLng(43.0741904, -89.3809802);
-
-    // create CameraPosition
-    let position: CameraPosition = {
-      target: ionic,
-      zoom: 18,
-      tilt: 30
-    };
-
-    // move the map's camera to position
-    map.moveCamera(position);
-
-    // create new marker
-    let markerOptions: MarkerOptions = {
-      position: ionic,
-      title: 'Ionic'
-    };
+    autocomplete.addListener('place_changed',()=>{
+      this.zone.run(() => {
+        let place = autocomplete.getPlace();
+        console.log(place);        
+        if (place.geometry) {
+          let latSearch = place.geometry.location.lat();
+          let lngSearch = place.geometry.location.lng();
+          this.title = place.formatted_address;
+          this.marker.setMap(null);
+          this.map.setCenter({ lat: latSearch, lng: lngSearch });
+          this.setMarker(latSearch, lngSearch);
+          this.getWeather(latSearch,lngSearch);
+        }
+      });
+    });
+    this.setMarker(lat, lng);
+  }
+  setMarker(lat, lng) {
+    this.marker = new google.maps.Marker({
+      position: { lat: lat, lng: lng },
+      map: this.map
+    });
   }
 };
 

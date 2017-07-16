@@ -6,9 +6,23 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>weather</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div id="map"></div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div id="map"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label color="primary">View info weather by address</ion-label>
+         <ion-input type="text" id="autocomplete"></ion-input> 
+         <!-- <input id="autocomplete" type="text" placeholder="Enter a location"> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

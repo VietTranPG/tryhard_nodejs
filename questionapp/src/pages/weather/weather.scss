@@ -1,6 +1,16 @@
 page-weather {
-    #map{
-        width: 500px;
-        height: 500px;
+    #map{      
+        height: 50vh;
     }
+    ion-input {
+            border-radius: 30px !important;
+            padding-left: 30px !important;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            border: 1px solid color($colors, light);
+            ;
+            border-bottom: 0px !important;
+            box-shadow: none !important;
+            background: color($colors, light);
+        }
 }

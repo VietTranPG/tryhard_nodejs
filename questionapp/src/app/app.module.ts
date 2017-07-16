@@ -12,8 +12,7 @@ import { UtilityService } from '../core/services/utility.service';
 import { HomeTab } from '../pages/home-tab/home-tab';
 import { Weather } from '../pages/weather/weather';
 import { IonicStorageModule } from '@ionic/storage';
-import {Setting} from '../pages/setting/setting'
-import {GoogleMaps} from '@ionic-native/google-maps';
+import {Setting} from '../pages/setting/setting';
 @NgModule({
   declarations: [
     MyApp,
@@ -42,7 +41,6 @@ import {GoogleMaps} from '@ionic-native/google-maps';
     StatusBar,
     SplashScreen,
     UtilityService,
-    GoogleMaps,
     DataService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
