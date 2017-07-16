@@ -13,15 +13,31 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div id="map"></div>
+        <ion-label color="primary">View info weather by address</ion-label>
+        <ion-input type="text" id="autocomplete"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-label color="primary">View info weather by address</ion-label>
-         <ion-input type="text" id="autocomplete"></ion-input> 
-         <!-- <input id="autocomplete" type="text" placeholder="Enter a location"> -->
+        <div id="map"></div>
       </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-list>
+        <ion-item>
+          <ion-icon name="nuclear"></ion-icon>
+          Temperature(Celsius) : {{temp}}
+        </ion-item>
+        <ion-item>
+          <ion-icon name="ios-water"></ion-icon>
+          Humidity (%) : {{humidity}}%
+        </ion-item>
+        <ion-item>
+          <ion-icon name="leaf"></ion-icon>
+          Weather Status: {{weatherStatus}}
+        </ion-item>
+      </ion-list>
     </ion-row>
   </ion-grid>
 

@@ -18,7 +18,10 @@ declare var google: any;
 export class Weather {
   map: any;
   marker:any;
-  title: string = "Weather page"
+  title: string = "Your Location";
+  temp:number = 0;
+  humidity:number = 0;
+  weatherStatus:string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation,
     private utility: UtilityService, private _http: DataService, private zone: NgZone) {
 
@@ -40,6 +43,9 @@ export class Weather {
     let url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&appid=7fc238c336327057911fb1b44ed4cd87";
     this._http.getOtherUrl(url).subscribe((res) => {
       console.log(res);
+      this.temp = this.convertTemp(res.main.temp);
+      this.humidity = res.main.humidity;
+      this.weatherStatus = res.weather.pop().description;
     })
   };
   ngAfterViewInit() {
@@ -75,6 +81,9 @@ export class Weather {
       position: { lat: lat, lng: lng },
       map: this.map
     });
+  };
+  convertTemp(kelvinTemp){
+    return Math.round(kelvinTemp - 273.15);
   }
 };
 
