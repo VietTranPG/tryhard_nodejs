@@ -6,6 +6,7 @@ import { SystemConstants } from '../../core/common/system.constants';
 import { UtilityService } from '../../core/services/utility.service';
 import { HomeTab } from '../home-tab/home-tab';
 import { Storage } from '@ionic/storage';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 /**
  * Generated class for the Login page.
  *
@@ -14,12 +15,14 @@ import { Storage } from '@ionic/storage';
  */
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
+  providers: [Facebook]
 })
 export class Login {
   email: string;
   password: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private _http: DataService, private utility: UtilityService, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _http: DataService,
+    private utility: UtilityService, private storage: Storage, private fb: Facebook) {
     this.email = this.navParams.get("email");
     this.password = this.navParams.get("password");
   }
@@ -38,9 +41,18 @@ export class Login {
         this.utility.alert('Login fail', res.message);
       } else {
         this.storage.set('user', res.data);
-        
-        this.navCtrl.push(HomeTab);
+        this.navCtrl.push(HomeTab).then(() => {
+          const index = this.navCtrl.getActive().index;
+          this.navCtrl.remove(0, index);
+        });
       }
     })
+  }
+  loginFacebook() {
+    this.fb.login(['email'])
+      .then((res: FacebookLoginResponse) => {
+        console.log('Logged into Facebook!', res)
+      })
+      .catch(e => console.log('Error logging into Facebook', e));
   }
 }
