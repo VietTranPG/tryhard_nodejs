@@ -38,8 +38,10 @@ export class Login {
         this.utility.alert('Login fail', res.message);
       } else {
         this.storage.set('user', res.data);
-        
-        this.navCtrl.push(HomeTab);
+        this.navCtrl.push(HomeTab).then(() => {
+          const index = this.navCtrl.getActive().index;
+          this.navCtrl.remove(0, index);
+        });
       }
     })
   }
