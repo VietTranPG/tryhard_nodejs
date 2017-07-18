@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var config = require("config");
-var user_model = require("../model/user_model")
+var user_model = require("../model/user_model");
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');

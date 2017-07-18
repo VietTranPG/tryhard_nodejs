@@ -1,12 +1,11 @@
 var mysql = require('mysql');
-var config = require("config");
 function Connection() {
     this.pool = mysql.createPool({
         connectionLimit: 10,
-        host: config.get("mysql.host"),
-        user: config.get("mysql.user"),
-        password: config.get("mysql.password"),
-        database: config.get("mysql.database")
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "questionapp"
     });
     this.acquire = function (callback) {
         this.pool.getConnection(function (err, connection) {
