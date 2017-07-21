@@ -1,3 +1,4 @@
+import { Product } from './../product/product';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {Weather} from '../weather/weather';
@@ -16,6 +17,7 @@ import {Setting} from '../setting/setting'
 export class HomeTab {
   weather :any = Weather;
   setting :any = Setting;
+  product :any = Product;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

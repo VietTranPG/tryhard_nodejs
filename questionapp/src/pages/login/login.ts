@@ -22,7 +22,7 @@ export class Login {
   email: string;
   password: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private _http: DataService,
-    private utility: UtilityService, private storage: Storage, private fb: Facebook) {
+    private _utility: UtilityService, private _storage: Storage, private _fb: Facebook) {
     this.email = this.navParams.get("email");
     this.password = this.navParams.get("password");
   }
@@ -34,13 +34,11 @@ export class Login {
     this.navCtrl.push(Signup)
   }
   login(email, password) {
-    var data = { email: email, password: password }
-    var url = 'user/getLogin';
-    this._http.post(url, data).subscribe(res => {
+    this._http.login(email,password).subscribe(res => {
       if (res.status == SystemConstants.STATUS_ERROR) {
-        this.utility.alert('Login fail', res.message);
+        this._utility.alert('Login fail', res.message);
       } else {
-        this.storage.set('user', res.data);
+        this._storage.set('user', res.data);
         this.navCtrl.push(HomeTab).then(() => {
           const index = this.navCtrl.getActive().index;
           this.navCtrl.remove(0, index);
@@ -49,9 +47,12 @@ export class Login {
     })
   }
   loginFacebook() {
-    this.fb.login(['email'])
+    this._fb.login(["public_profile", "email", "user_friends"])
       .then((res: FacebookLoginResponse) => {
-        console.log('Logged into Facebook!', res)
+        this.navCtrl.push(HomeTab).then(() => {
+          const index = this.navCtrl.getActive().index;
+          this.navCtrl.remove(0, index);
+        });
       })
       .catch(e => console.log('Error logging into Facebook', e));
   }

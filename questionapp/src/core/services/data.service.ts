@@ -6,34 +6,42 @@ import 'rxjs';
 @Injectable()
 export class DataService {
     loading: any;
-    constructor(private _http: Http, private utility: UtilityService) {
+    constructor(private _http: Http, private _utility: UtilityService) {
 
     }
-    get(url: string) {
-        this.utility.showLoading();
-        return this._http.get(SystemConstants.BASE_API + url).map((res: Response) => {
-            this.utility.hideLoading();
-            return res.json();
-        });
-    };
-    post(url: string, body?: any) {
-        this.utility.showLoading();
-        return this._http.post(SystemConstants.BASE_API + url, body).map((res: Response) => {
-            this.utility.hideLoading();
-            return res.json();
-        });
-    };
-    getNoLoading(url: string) {
-
-    };
-    postNoLoading(url: string) {
-
-    };
-    getOtherUrl(url){
-        this.utility.showLoading();
+    getOtherUrl(url) {
+        this._utility.showLoading();
         return this._http.get(url).map((res: Response) => {
-            this.utility.hideLoading();
+            this._utility.hideLoading();
             return res.json();
         });
     };
+    // API FOR REGISTER PAGE
+    register(data) {
+        this._utility.showLoading();
+        let url =SystemConstants.BASE_API + 'user/getRegister';
+        return this._http.post(url, data).map((res) => {
+            this._utility.hideLoading();
+            return res.json();
+        })
+    };
+    // API FOR LOGIN PAGE
+    login(email, password) {
+        this._utility.showLoading();
+        var data = { email: email, password: password }
+        var url = SystemConstants.BASE_API + 'user/getLogin';
+        return this._http.post(url, data).map(res => {
+            this._utility.hideLoading();
+            return res.json()
+        })
+    }
+    // API FOR PRODUCT PAGE
+    getListProduct() {
+        this._utility.showLoading();
+        let url = SystemConstants.BASE_API + 'api/getListProduct';
+        return this._http.get(url).map((res: Response) => {
+            this._utility.hideLoading();
+            return res.json()
+        })
+    }
 }

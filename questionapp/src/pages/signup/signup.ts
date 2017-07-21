@@ -30,7 +30,7 @@ export class Signup {
       email: email,
       password: password
     }
-    this._http.post(url, body).subscribe((res) => {
+    this._http.register(body).subscribe((res) => {
       if (res.status == SystemConstants.STATUS_ERROR) {
         this.utility.alert('Signup fail',res.message);
       }else{

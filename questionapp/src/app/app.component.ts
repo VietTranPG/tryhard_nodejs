@@ -13,13 +13,9 @@ export class MyApp {
   rootPage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage) {
-    splashScreen.show();
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
-    });
-    this.storage.get('user').then((val) => {
+      this.storage.get('user').then((val) => {
       if (val) {
         this.rootPage = HomeTab;
       } else {
@@ -27,6 +23,8 @@ export class MyApp {
       }
       splashScreen.hide();
     });
+    });
+    
   }
 }
 

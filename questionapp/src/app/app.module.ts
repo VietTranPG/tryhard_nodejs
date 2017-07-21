@@ -4,15 +4,17 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
-import { Login } from '../pages/login/login';
-import { Signup } from '../pages/signup/signup';
 import { HttpModule } from '@angular/http';
 import { DataService } from '../core/services/data.service';
 import { UtilityService } from '../core/services/utility.service';
+import { IonicStorageModule } from '@ionic/storage';
+// import page
+import { Login } from '../pages/login/login';
+import { Signup } from '../pages/signup/signup';
 import { HomeTab } from '../pages/home-tab/home-tab';
 import { Weather } from '../pages/weather/weather';
-import { IonicStorageModule } from '@ionic/storage';
-import {Setting} from '../pages/setting/setting';
+import { Setting } from '../pages/setting/setting';
+import { Product } from '../pages/product/product';
 @NgModule({
   declarations: [
     MyApp,
@@ -20,13 +22,14 @@ import {Setting} from '../pages/setting/setting';
     Signup,
     HomeTab,
     Weather,
-    Setting
+    Setting,
+    Product
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-     IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,7 +38,8 @@ import {Setting} from '../pages/setting/setting';
     Signup,
     HomeTab,
     Weather,
-    Setting
+    Setting,
+    Product
   ],
   providers: [
     StatusBar,
