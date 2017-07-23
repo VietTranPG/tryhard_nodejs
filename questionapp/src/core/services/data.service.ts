@@ -26,9 +26,8 @@ export class DataService {
         })
     };
     // API FOR LOGIN PAGE
-    login(email, password) {
-        this._utility.showLoading();
-        var data = { email: email, password: password }
+    login(data) {
+        this._utility.showLoading();        
         var url = SystemConstants.BASE_API + 'user/getLogin';
         return this._http.post(url, data).map(res => {
             this._utility.hideLoading();
