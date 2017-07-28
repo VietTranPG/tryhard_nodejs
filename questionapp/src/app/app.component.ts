@@ -12,26 +12,26 @@ declare var localStorage: any;
 export class MyApp {
   rootPage: any;
 
-  constructor(platform: Platform, statusBar: StatusBar,private _splashScreen: SplashScreen, private storage: Storage) {
+  constructor(platform: Platform, statusBar: StatusBar, private _splashScreen: SplashScreen, private storage: Storage) {
     statusBar.styleDefault();
     platform.ready().then(() => {
-      let user = localStorage.getItem('user')
-      if (user) {
-        this.rootPage = HomeTab;
-      } else {
-        this.rootPage = Login;
-      }
-      setTimeout(() => {
-        this._splashScreen.hide();
-      }, 300);
-      // this.storage.get('user').then((val) => {
-      // if (val) {
-
+      // let user = localStorage.getItem('user')
+      // if (user) {
+      //   this.rootPage = HomeTab;
       // } else {
-
+      //   this.rootPage = Login;
       // }
 
-      // });
+      this.storage.get('user').then((val) => {
+        if (val) {
+          this.rootPage = HomeTab;
+        } else {
+          this.rootPage = Login;
+        }
+        setTimeout(() => {
+          this._splashScreen.hide();
+        }, 300);
+      });
     });
 
   }

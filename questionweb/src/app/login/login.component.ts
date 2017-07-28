@@ -1,6 +1,9 @@
+import { UtilityService } from './../../services/utility.service';
+import { SystemConstants } from './../../common/system.constants';
 import { Component, OnInit } from '@angular/core';
-import {AppComponent} from '../app.component';
-import {DataService} from '../../services/data.service';
+import { AppComponent } from '../app.component';
+import { DataService } from '../../services/data.service';
+import {Router} from '@angular/router'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,15 +11,24 @@ import {DataService} from '../../services/data.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _appComponent:AppComponent,private _http:DataService) { }
+  constructor(private _appComponent: AppComponent, private _http: DataService,private _utilityService:UtilityService,private _router:Router) { }
 
   ngOnInit() {
   }
-  login(email,password){
+
+  login(email, password) {
     this._appComponent.showloading = true;
     let url = "users/signin";
-    this._http.post(url,{email:email,password:password}).subscribe(res=>{
-     this._appComponent.showloading = false;
-    });
+    this._http.post(url, { email: email, password: password }).subscribe(res => {
+      console.log(res);
+      if (res.Status == SystemConstants.STATUS_ERROR) {
+        this._utilityService.showAlert('Oops...',res.Message,'error');
+      } else {
+        this._router.navigate(['/main']);
+      }
+    },
+      error => { },
+      () => this._appComponent.showloading = false
+    )
   }
 }

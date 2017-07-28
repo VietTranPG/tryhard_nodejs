@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -15,6 +16,7 @@ import { HomeTab } from '../pages/home-tab/home-tab';
 import { Weather } from '../pages/weather/weather';
 import { Setting } from '../pages/setting/setting';
 import { Product } from '../pages/product/product';
+import { Details } from './../pages/details/details';
 @NgModule({
   declarations: [
     MyApp,
@@ -23,7 +25,8 @@ import { Product } from '../pages/product/product';
     HomeTab,
     Weather,
     Setting,
-    Product
+    Product,
+    Details
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { Product } from '../pages/product/product';
     HomeTab,
     Weather,
     Setting,
-    Product
+    Product,
+    Details
   ],
   providers: [
     StatusBar,

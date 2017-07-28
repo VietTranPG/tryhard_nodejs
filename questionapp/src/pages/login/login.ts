@@ -40,8 +40,8 @@ export class Login {
       if (res.status == SystemConstants.STATUS_ERROR) {
         this._utility.alert('Login fail', res.message);
       } else {
-        // this._storage.set('user', res.data);
-        localStorage.setItem('user',JSON.stringify(res.data));
+        this._storage.set('user', res.data);
+        // localStorage.setItem('user',JSON.stringify(res.data));
         this.navCtrl.push(HomeTab).then(() => {
           const index = this.navCtrl.getActive().index;
           this.navCtrl.remove(0, index);

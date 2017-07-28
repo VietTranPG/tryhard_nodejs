@@ -1,7 +1,7 @@
+import { Details } from './../details/details';
 import { DataService } from './../../core/services/data.service';
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { NavController, NavParams,ModalController } from 'ionic-angular';
 /**
  * Generated class for the Product page.
  *
@@ -15,7 +15,7 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class Product {
   listProduct: Array<Object>
-  constructor(public navCtrl: NavController, public navParams: NavParams, private _http: DataService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _http: DataService,public modalCtrl: ModalController) {
 
   }
   ionViewDidEnter() {
@@ -26,5 +26,9 @@ export class Product {
       this.listProduct = res.data;
       console.log(res)
     });
+  };
+  gotoDetails(item){
+    this.navCtrl.push(Details,item);
   }
 }
+
