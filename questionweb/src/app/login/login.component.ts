@@ -10,13 +10,14 @@ import {Router} from '@angular/router'
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
+  email:string;
+  password:string;
   constructor(private _appComponent: AppComponent, private _http: DataService,private _utilityService:UtilityService,private _router:Router) { }
 
   ngOnInit() {
   }
 
-  login(email, password) {
+  login(email:string, password:string) {
     this._appComponent.showloading = true;
     let url = "users/signin";
     this._http.post(url, { email: email, password: password }).subscribe(res => {
@@ -27,7 +28,10 @@ export class LoginComponent implements OnInit {
         this._router.navigate(['/main']);
       }
     },
-      error => { },
+      error => { 
+        this._appComponent.showloading = false;
+         this._utilityService.showAlert('Oops...',SystemConstants.REQUEST_TIMEOUT,'error');
+      },
       () => this._appComponent.showloading = false
     )
   }

@@ -1,0 +1,57 @@
+/*-- header --*/
+.logo  {
+    margin: 0.5em 0;
+    padding:6px;
+}
+
+.navbar-brand {
+    display: block;
+    height: inherit;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 0;
+    float: none;
+    font-size: 0.9em;
+    text-align: center;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #fff;
+    background:#e2313d;
+} 
+.logo h1 {
+    margin: 0.5em 0;
+}
+
+.navbar-nav {
+    float: right;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+    background: none;
+}
+.navbar-default {
+    border: none;
+    background: none;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+	color:#fff;
+	background:#f44336;
+}
+.header {
+   background-color: #1b1c1d;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #fff; 
+	font-size: 1.2em;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+.navbar {
+    margin-bottom: 0;
+}
+.header-nav .nav > li > a {
+    padding: 47px 20px;
+} 
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #fff;
+}
