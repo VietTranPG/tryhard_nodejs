@@ -17,7 +17,13 @@ export class AddQuestionComponent implements OnInit {
   ans3: string;
   ans4: string;
   status: any;
+  listType:Array<{
+    id:any,
+    description:any
+  }>;
+  selectedType : any;
   ngOnInit() {
+    this.getTypeQuestion();
   }
   submit() {
     let data = {
@@ -54,5 +60,13 @@ export class AddQuestionComponent implements OnInit {
        this._utility.showAlert("Error", 'Server error', 'error');
       this._appComponent.showloading = false;
     });
+  }
+  getTypeQuestion(){
+    this._dataService.GetTypeQuestion().subscribe(res=>{
+      console.log(res);
+      this.listType = res.Data;
+      this.selectedType = this.listType[0].id;
+      console.log(this.selectedType);
+    })
   }
 }

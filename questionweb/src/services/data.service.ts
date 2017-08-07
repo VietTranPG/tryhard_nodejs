@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response} from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { UtilityService } from './utility.service';
 import { Observable } from 'rxjs/Rx';
 import { AppComponent } from '../app/app.component';
@@ -19,7 +19,7 @@ export class DataService {
             .catch(this._handleError)
     }
     post(u: string, body: any) {
-        let url =  this.API_URL + u;
+        let url = this.API_URL + u;
         return this._http.post(url, body)
             .map(res => res.json())
 
@@ -30,8 +30,13 @@ export class DataService {
         );
     }
     //Add question
-    AddQuestion(body){
+    AddQuestion(body) {
         let url = `${this.API_URL}question/add`;
-        return this._http.post(url,body).timeout(3000).map(res=>res.json());
+        return this._http.post(url, body).timeout(3000).map(res => res.json());
+    }
+    //Get Ques type
+    GetTypeQuestion() {
+        let url = `${this.API_URL}question/type`;
+        return this._http.get(url).timeout(3000).map(res => res.json());
     }
 }

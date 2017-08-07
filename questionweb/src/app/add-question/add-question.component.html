@@ -1,38 +1,40 @@
 <div class="container">
-  <form ngSubmit = "submit()">
+  <form ngSubmit="submit()">
     <div class="question">
       <label>Question:</label>
       <input type="text" class="form-control" name="question" [(ngModel)]="question" />
+      <select [(ngModel)]="selectedType" name="type">
+        <option *ngFor="let type of listType" [ngValue]="type.id">{{type.description}}</option>
+      </select>
     </div>
     <div class="answers">
       <label>Answers</label>
       <div class="row">
         <div class="col-xs-1">
-          <input type="radio" class="option-input radio" value="1" name="ans" [(ngModel)]="status"/>
+          <input type="radio" class="option-input radio" value="1" name="ans" [(ngModel)]="status" />
         </div>
         <div class="col-xs-9"> <input type="text" class="form-control" name="ans1" [(ngModel)]="ans1" /></div>
       </div>
       <div class="row">
         <div class="col-xs-1">
-          <input type="radio" class="option-input radio" name="ans" value="2" [(ngModel)]="status"/>
+          <input type="radio" class="option-input radio" name="ans" value="2" [(ngModel)]="status" />
         </div>
         <div class="col-xs-9"> <input type="text" class="form-control" name="ans2" [(ngModel)]="ans2" /></div>
       </div>
       <div class="row">
         <div class="col-xs-1">
-          <input type="radio" class="option-input radio" value="3" name="ans" [(ngModel)]="status"/>
+          <input type="radio" class="option-input radio" value="3" name="ans" [(ngModel)]="status" />
         </div>
-        <div class="col-xs-9"> <input type="text" class="form-control"  name="ans3" [(ngModel)]="ans3" /></div>
+        <div class="col-xs-9"> <input type="text" class="form-control" name="ans3" [(ngModel)]="ans3" /></div>
       </div>
       <div class="row">
         <div class="col-xs-1">
-          <input type="radio" class="option-input radio" name="ans" value="4" [(ngModel)]="status"/>
+          <input type="radio" class="option-input radio" name="ans" value="4" [(ngModel)]="status" />
         </div>
         <div class="col-xs-9"> <input type="text" class="form-control" name="ans4" [(ngModel)]="ans4" /></div>
       </div>
     </div>
     <div class="footer">
-
       <span class="input-group-btn">
       <button type="submit" class="btn btn-success" (click)="submit()">Add</button>
     </span>
