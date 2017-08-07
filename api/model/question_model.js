@@ -74,8 +74,9 @@ function GetTypeById(id) {
 function AddQuestion(data) {
     return new Promise(function (resolve, reject) {
         connection.acquire((err, con) => {
-            let query = con.query(`insert into question set ?`, [data.question], function (error, results, fields) {
-
+            let question = {title:data.question,type:data.type}
+            let query = con.query(`insert into question set ?`, question, function (error, results, fields) {
+                console.log(query.sql)
                 if (error) {
                     reject(error);
                 } else {

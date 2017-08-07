@@ -28,6 +28,7 @@ export class AddQuestionComponent implements OnInit {
   submit() {
     let data = {
       question: this.question,
+      type:this.selectedType,
       answers: [
         { title: this.ans1, status: 0 },
         { title: this.ans2, status: 0 },
