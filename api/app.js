@@ -33,6 +33,9 @@ app.use('/users', users);
 app.use('/question', question);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
+  res.json({
+    "message":"API nay chua lam"
+  })
   // var err = new Error('Not Found');
   // err.status = 404;
   // next(err);

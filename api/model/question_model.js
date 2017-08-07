@@ -1,5 +1,6 @@
 var Promise = require("bluebird");
 var connection = require("../common/database");
+const _ = require("lodash");
 function AddType(type) {
     return new Promise(function (resolve, reject) {
         connection.acquire(function (err, con) {
@@ -42,8 +43,8 @@ function DeleteType(id) {
         });
     });
 };
-function GetType(){
-     return new Promise(function (resolve, reject) {
+function GetType() {
+    return new Promise(function (resolve, reject) {
         connection.acquire(function (err, con) {
             let query = con.query(`Select * from type`, function (error, results, fields) {
                 con.release();
@@ -56,10 +57,10 @@ function GetType(){
         });
     });
 };
-function GetTypeById(id){
+function GetTypeById(id) {
     return new Promise(function (resolve, reject) {
         connection.acquire(function (err, con) {
-            let query = con.query(`Select * from type where id = ?`,[id], function (error, results, fields) {
+            let query = con.query(`Select * from type where id = ?`, [id], function (error, results, fields) {
                 con.release();
                 if (error) {
                     reject(error);
@@ -69,7 +70,7 @@ function GetTypeById(id){
             });
         });
     });
-}
+};
 function AddQuestion(data) {
     return new Promise(function (resolve, reject) {
         connection.acquire((err, con) => {
@@ -100,12 +101,33 @@ function AddQuestion(data) {
         });
     });
 };
+function GetQuestion() {
+    return new Promise((resolve, reject) => {
+        connection.acquire((err, con) => {
+            let sql = `SELECT question.id as question_id,question.title,question.type,answer.title as answer,answer.status,answer.id as answer_id,type.id as type_id,type.description as type_description FROM question
+INNER JOIN answer ON question.id = answer.question_id
+INNER JOIN type ON type.id = question.type`;
+            let query = con.query(sql, (error, results) => {
+                con.release();
+              
+                if(error){
+                    reject(error);
+                }else{
+                    let data = [];
+                    data = _.chain(results);
+                    resolve(data);
+                }
+            })
 
+        })
+    })
+};
 module.exports = {
     AddType: AddType,
     UpdateType: UpdateType,
     DeleteType: DeleteType,
-    GetType:GetType,
-    GetTypeById:GetTypeById,
-    AddQuestion: AddQuestion
+    GetType: GetType,
+    GetTypeById: GetTypeById,
+    AddQuestion: AddQuestion,
+    GetQuestion:GetQuestion
 }

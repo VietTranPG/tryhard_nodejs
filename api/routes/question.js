@@ -93,6 +93,7 @@ router.post('/deletetype', function (req, res, next) {
     }
 });
 router.get('/type', function (req, res, next) {
+    console.log('bbbbcsdfgsddfđga');
     question_model.GetType()
         .then(function (result) {
             res.json({
@@ -161,4 +162,41 @@ router.post('/add', function (req, res, next) {
     }
 
 });
+router.get('/', (req, res) => {
+    console.log('get question')
+    question_model.GetQuestion().then((result) => {
+        var data = [];
+        result = result.__wrapped__;
+        for (i = 0; i < result.length; i++) {
+            let indexOfObj = data.findIndex(x => x.question_id == result[i].question_id);
+            console.log(indexOfObj)
+            if (indexOfObj < 0) {
+                data.push(
+                    {
+                        question_id: result[i].question_id,
+                        title: result[i].title,
+                        answers: [
+                            {
+                                answer_id: result[i].answer_id,
+                                answer: result[i].answer,
+                            }
+                        ]
+                    }
+                )
+                console.log(data);
+            } else {
+                 console.log(data[indexOfObj]);
+                data[indexOfObj].answers.push({
+                    answer_id: result[i].answer_id,
+                    answer: result[i].answer,
+                })
+            }
+        }
+        res.json({
+            data: data
+        })
+    }).error((error) => {
+
+    })
+})
 module.exports = router;
