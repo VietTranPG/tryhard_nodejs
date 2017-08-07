@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response} from '@angular/http';
 import { UtilityService } from './utility.service';
 import { Observable } from 'rxjs/Rx';
 import { AppComponent } from '../app/app.component';
@@ -28,5 +28,10 @@ export class DataService {
         return Observable.throw(
             new Error(`${e.status} ${e.statusText}`)
         );
+    }
+    //Add question
+    AddQuestion(body){
+        let url = `${this.API_URL}question/add`;
+        return this._http.post(url,body).timeout(3000).map(res=>res.json());
     }
 }
